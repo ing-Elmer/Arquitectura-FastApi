@@ -1,9 +1,10 @@
 from sqlalchemy.orm import Session
 from Models.Users import UserSchema
 from Data.data import User
-from passlib.hash import bcrypt
-import os
+from passlib.context import CryptContext
 
+# Configura el contexto de cifrado sin especificar el esquema
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # Obtener todos los usuarios
 def get_user(db: Session, skipt: int = 0, limit: int = 100):
     return db.query(User).offset(skipt).limit(limit).all()
@@ -12,30 +13,15 @@ def get_user(db: Session, skipt: int = 0, limit: int = 100):
 def get_user_by_id(db: Session, user_id: int):
     return db.query(User).filter(User.id == user_id).first()
 
-#Generar un salto seguro
-def generate_salt(length=32):
-    return os.urandom(length).hex()
-
-#Hashear una contraseña usando bcrypt:
-def hash_password(password, salt):
-    return bcrypt.hash(password, salt=salt)
-
-#Verificar una contraseña comparando el hash:
-def verify_password(password, hashed_password):
-    return bcrypt.verify(password, hashed_password)
-
 # Crear un usuario
 def create_user(db: Session, user: UserSchema):
-    # Generar la sal y hashear la contraseña
-    salt = generate_salt()
-    hashed_password = hash_password(user.password, salt)
-
+    # Hashea la contraseña antes de almacenarla
+    hashed_password = pwd_context.hash(user.password)
     _user = User(
         name=user.name,
         last_name=user.last_name,
         email=user.email,
         password=hashed_password,
-        salt=salt
     )
     db.add(_user)
     db.commit()
@@ -51,10 +37,13 @@ def remove_User(db: Session, user_id: int):
 # Actualizar un usuario
 def update_user(db: Session, user_id: int, user: UserSchema):
     _user = get_user_by_id(db=db, user_id=user_id)
+    hashed_password = pwd_context.hash(_user.password)
     _user.name = user.name
     _user.last_name = user.last_name
     _user.email = user.email
-    _user.password = user.password
+    _user.password = hashed_password
+
     db.commit()
     db.refresh(_user)
     return _user
+
