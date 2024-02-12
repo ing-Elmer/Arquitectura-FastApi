@@ -1,9 +1,8 @@
 from fastapi import FastAPI
-from Config.config import engine
-from Data import data
+from Config.config import engine, Base
 from Routes.router import router
 
-data.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 @app.get("/")
