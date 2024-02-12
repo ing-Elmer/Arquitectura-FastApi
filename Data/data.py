@@ -10,6 +10,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     password = Column(String)
     phone = Column(Integer, index=True)
+    otp = Column(String, nullable=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(TIMESTAMP, server_default=text('now()'))
     updated_at = Column(TIMESTAMP, server_default=text('now()'), onupdate=text('now()'))

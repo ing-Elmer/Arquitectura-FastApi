@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from fastapi_mail import ConnectionConfig
+from fastapi_mail import FastMail, ConnectionConfig
 from pydantic import BaseModel, EmailStr
 from typing import List
+
 
 
 DATABASE_URL = "postgresql://postgres:admin@localhost:5432/prueba"

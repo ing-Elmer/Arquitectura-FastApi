@@ -11,6 +11,7 @@ class UserSchema(BaseModel):
     password: str
     is_active: Optional[bool] = True
     phone: Optional[int] = None
+    otp: Optional[str] = None
     created_at: Optional[str] = None
     updated_at: Optional[str] = None
 

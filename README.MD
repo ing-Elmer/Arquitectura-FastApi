@@ -40,3 +40,7 @@
 #### enviar correos 
 
 `pip install fastapi-mail`
+
+#### JWT
+
+`pip install "python-jose[cryptography]"`
