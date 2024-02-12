@@ -1,10 +1,9 @@
 from Models.Users import RequestUser, ResponseUser
 from Mails.send_email import send_mail
 from fastapi import Depends, HTTPException
-from Config.config import SessionLocal, get_db
+from Config.config import get_db
 from sqlalchemy.orm import Session
 from Service.user_service import UserService
-from pydantic import EmailStr
 
 class UserController:
     

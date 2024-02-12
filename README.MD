@@ -21,13 +21,17 @@
 #### Instalar el conector a Sql
 
 `pip install sqlalchemy `
+* [Documentacion] (https://www.sqlalchemy.org/)
 
 #### Instalar pyscopg2
 
 `pip install pyscopg2`
+* [Documentacion] (https://pypi.org/project/psycopg2/)
 
 #### Hashear la contraseña
-`pip install passlib[bcrypt] zxcvbn`
+`pip install passlib[bcrypt]`
+* [Documentacion] (https://pypi.org/project/passlib/)
+* [Documentacion] (https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)
 
 
 #### instalar valilador de correo 
@@ -44,3 +48,5 @@
 #### JWT
 
 `pip install "python-jose[cryptography]"`
+
+* [Documentacion] (https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)

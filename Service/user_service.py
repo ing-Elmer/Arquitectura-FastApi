@@ -16,7 +16,7 @@ class UserService:
         return db.query(User).filter(User.id == user_id).first()
 
     # Crear un usuario
-    def create_user(self,db: Session, user: UserSchema):
+    def create_user(self, db: Session, user: UserSchema):
         # Hashea la contraseña antes de almacenarla
         token = JWT().create_access_token({"sub": user.name}, expires_minutes=60)
         hashed_password = self.pwd_context.hash(user.password)
