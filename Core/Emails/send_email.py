@@ -3,11 +3,10 @@
 import os
 from email_validator import validate_email, EmailNotValidError
 from fastapi_mail import FastMail, MessageSchema, MessageType
-from Utils.Error.error import CustomError
+from Core.Validators.error import CustomError
 from jinja2 import Environment, FileSystemLoader
 
 from Config.config import EmailManager
-
 
 
 async def send_email(to: str, subject: str, name: str, link: str = "http://localhost:5173"):
@@ -27,7 +26,7 @@ async def send_email(to: str, subject: str, name: str, link: str = "http://local
             current_path = os.path.dirname(os.path.abspath(__file__))
 
             # Construir la ruta al archivo de la imagen del logo
-            logo_path = os.path.join(current_path, "..", "Resources", "Image", "logo.png")
+            logo_path = os.path.join(current_path, "..", "..", "Resources", "Image", "logo.png")
 
             # Validar que el archivo exista
             if not os.path.exists(logo_path):

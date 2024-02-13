@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from Models.Users import UserModel
-from Data.user_data import User
+from Api.Models.Users import UserModel
+from Api.Data.user_data import User
 from passlib.context import CryptContext
 from Utils.Jwt.jwt import JWT
 

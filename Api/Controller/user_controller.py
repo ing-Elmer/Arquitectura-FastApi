@@ -1,9 +1,9 @@
-from Models.Users import RequestUser, ResponseUser
-from Mails.send_email import send_email
-from fastapi import Depends, HTTPException
+from Api.Models.Users import RequestUser, ResponseUser
+from Core.Emails.send_email import send_email
+from fastapi import Depends
 from Config.config import ConexionBD
 from sqlalchemy.orm import Session
-from Service.user_service import UserService
+from Api.Service.user_service import UserService
 
 class UserController:
     
@@ -17,4 +17,4 @@ class UserController:
         await send_email(email, "Registro de Usuario", name, link)
         user_created = UserService().create_user(db, user=request.parameter)
         # Retorna la respuesta al cliente
-        return ResponseUser(code=200, status="success", message="Usuario registrado correctamente", result=user_created).dict(exclude_none=True)
+        return ResponseUser(code=200, status="success", message="Usuario registrado correctamente", result=user_created).model_dump(exclude_none=True)

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from Config.config import ConexionBD
 from sqlalchemy.orm import Session
-from Models.Users import  RequestUser
-from Controller.user_controller import UserController
+from Api.Models.Users import  RequestUser
+from Api.Controller.user_controller import UserController
 
 
 router = APIRouter()
