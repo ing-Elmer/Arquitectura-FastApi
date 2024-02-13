@@ -3,7 +3,7 @@ import os
 
 from fastapi import FastAPI
 from Api.Routes.router import router
-from Config.config  import ConexionBD
+from Api.Data.connection_data  import ConexionBD
 # Configurar la aplicación
 app = FastAPI(
   title="Introducción a FastAPI",

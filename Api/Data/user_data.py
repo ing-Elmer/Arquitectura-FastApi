@@ -1,5 +1,5 @@
 from sqlalchemy import String,Boolean, Column, Integer, text, TIMESTAMP
-from Config.config import ConexionBD
+from Api.Data.connection_data import ConexionBD
 
 class User(ConexionBD.Base):
     __tablename__ = 'users'

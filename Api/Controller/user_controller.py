@@ -1,7 +1,7 @@
 from Api.Models.Users import RequestUser, ResponseUser
 from Core.Emails.send_email import send_email
 from fastapi import Depends
-from Config.config import ConexionBD
+from Api.Data.connection_data import ConexionBD
 from sqlalchemy.orm import Session
 from Api.Service.user_service import UserService
 

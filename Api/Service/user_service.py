@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from Api.Models.Users import UserModel
 from Api.Data.user_data import User
 from passlib.context import CryptContext
-from Utils.Jwt.jwt import JWT
+from Core.Security.security_auth import JWT
 
 class UserService:
     # Configura el contexto de cifrado sin especificar el esquema
