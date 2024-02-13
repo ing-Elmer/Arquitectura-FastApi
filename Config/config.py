@@ -55,17 +55,17 @@ class ConexionBD:
             return False
 
 
-   
-class EmailSchema(BaseModel):
-    email: List[EmailStr]
-    
+load_dotenv()
 
-conf = ConnectionConfig(
-    MAIL_USERNAME="practicaprograuniversidad@gmail.com",
-    MAIL_PASSWORD="igjg nqqq iidr xqge",
-    MAIL_FROM="practicaprograuniversidad@gmail.com",
-    MAIL_PORT=587,
-    MAIL_SERVER="smtp.gmail.com",
-    MAIL_STARTTLS=True,
-    MAIL_SSL_TLS=False
-)
+class EmailManager:
+    # Configuración de mail
+    conf = ConnectionConfig(
+        MAIL_USERNAME=os.getenv("MAIL_USERNAME",""),
+        MAIL_PASSWORD=os.getenv("MAIL_PASSWORD",""),
+        MAIL_FROM=os.getenv("MAIL_FROM",""),
+        MAIL_PORT=587,
+        MAIL_SERVER="smtp.gmail.com",
+        MAIL_STARTTLS=True,
+        MAIL_SSL_TLS=False,
+        VALIDATE_CERTS = True
+    )

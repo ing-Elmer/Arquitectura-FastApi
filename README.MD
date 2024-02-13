@@ -28,12 +28,27 @@
 `pip install pyscopg2`
 * [Documentacion] (https://pypi.org/project/psycopg2/)
 
+
+#### - Instalar dependencia Jinja2
+* Instalar dependencia: pip install jinja2
+* descripción: Jinja2 es un motor de plantillas para Python. Es rápido, ampliamente utilizado y seguro.
+* Documentación oficial
+
+
 #### Hashear la contraseña
 `pip install passlib[bcrypt]`
 * [Documentacion] (https://pypi.org/project/passlib/)
 * [Documentacion] (https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)
 
+#### Instalar dependencia: pip install python-dotenv
+* descripción: python-dotenv lee variables de entorno desde archivos .env.
+* [Documentacion] https://pypi.org/project/python-dotenv/
 
+#### - Instalar dependencia python-multipart
+* Instalar dependencia: pip install python-multipart
+* descripción: python-multipart es una librería para manejar datos multipart en Python.
+* Documentación oficial
+* Documentación Uploadfile
 #### instalar valilador de correo 
 
 `pip install validate_email_address`
