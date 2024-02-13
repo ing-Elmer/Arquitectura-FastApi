@@ -1,6 +1,6 @@
 
 # Guía de FastAPI 2024 
-[![FastAPI](./assets/images/fastapi.png)](https://fastapi.tiangolo.com/)
+[![FastAPI](./Resources/Image/fastapi.png)](https://fastapi.tiangolo.com/)
 
 * Wilfredo Barquero Herrera
     - [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](liwbarqueroh@gmail.com )
@@ -263,15 +263,15 @@ app/
 
 
 ### Lista de errores HTTP
-![alt text](./assets/images/http-errores-1.png)
+![alt text](./Resources/Image/http-errores-1.png)
 
-![alt text](./assets/images/http-errores-2.png)
+![alt text](./Resources/Image/http-errores-2.png)
 
 
 ### Problemas con el Interprete 
-![alt text](./assets/images/bug-interprete-1.png)
+![alt text](./Resources/Image/bug-interprete-1.png)
 
-![alt text](./assets/images/bug-interprete-2.png)
+![alt text](./Resources/Image/bug-interprete-2.png)
 
 
 
