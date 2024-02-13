@@ -26,9 +26,16 @@ class UserModel(BaseModel):
 
 class RequestUser(BaseModel):
     parameter: UserModel = Field(...)
-
+    
 class ResponseUser(BaseModel, Generic[T]):
     code: int
     status: str
     message: str
     result: Optional[T]
+    
+class LoginModel(BaseModel):
+    email: str
+    password: str
+
+class RequestUserLogin(BaseModel):
+    parameter: LoginModel

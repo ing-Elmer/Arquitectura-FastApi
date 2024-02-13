@@ -1,6 +1,6 @@
 import re
 from starlette import status
-
+from Core.Security.security_encryption import SecurityEncryption
 class ValidatorModels:
     # Validar espcaios en blanco
     @staticmethod
@@ -88,3 +88,23 @@ class ValidatorModels:
                 f"El valor de {name} debe tener como máximo {length} caracteres"
             )
         return value
+    
+    @staticmethod
+    def validate_user_exists(user):
+        if user is None:
+            raise ValueError("El usuario no existe")
+        
+    @staticmethod
+    def validate_user_verified(is_verified):
+        if not is_verified:
+            raise ValueError("El usuario no ha sido verificado")
+
+    @staticmethod
+    def validate_user_active(is_active):
+        if not is_active:
+            raise ValueError("El usuario no está activo")
+
+    @staticmethod
+    def validate_credentials(password,user_password):
+        if not SecurityEncryption.verify_password(password, user_password):
+            raise ValueError("Credenciales incorrectas")
