@@ -17,7 +17,7 @@ class UserService:
     # Crear un usuario
     def create_user(self, db: Session, user: UserModel):
         # Hashea la contraseña antes de almacenarla
-        token = JWT().create_access_token({"sub": user.name}, expires_minutes=60)
+        token = JWT().create_access_token({"sub": user.name},token_type="activate", expires_minutes=60)
         hashed_password = SecurityEncryption.hash_password(user.password)
         _user = User(
             name=user.name,
@@ -60,7 +60,7 @@ class UserService:
         ValidatorModels.validate_credentials(password, user.password)  
         
         # Si todas las validaciones pasan, crea un token de acceso
-        token = JWT().create_access_token({"sub": user.id}, expires_minutes=60)
+        token = JWT().create_access_token({"sub": user.id},token_type="access", expires_minutes=60)
         return {"user": user,"access": token, "token_type": "bearer"}
 
 
