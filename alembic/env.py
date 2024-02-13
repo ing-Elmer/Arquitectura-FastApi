@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from Data.user_data import User
+from Api.Data.user_data import User
 from alembic import context
 
 load_dotenv()

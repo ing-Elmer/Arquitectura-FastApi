@@ -25,6 +25,7 @@ class UserService:
             last_name=user.last_name,
             email=user.email,
             password=hashed_password,
+            phone=user.phone,
             otp=token,
         )
         db.add(_user)
