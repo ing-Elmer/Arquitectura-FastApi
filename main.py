@@ -1,9 +1,22 @@
-from fastapi import FastAPI
-from Config.config import engine, Base
-from Routes.router import router
+# Importaciones
+import os
 
-Base.metadata.create_all(bind=engine)
-app = FastAPI()
+from fastapi import FastAPI
+from Routes.router import router
+from Config.config  import ConexionBD
+# Configurar la aplicación
+app = FastAPI(
+  title="Introducción a FastAPI",
+  description="Esta es una breve introducción a FastAPI, un framework para construir APIs con Python.",
+  version="1.0.0",
+)
+
+# Base de datos
+#ConexionBD().verificar_conexion()
+ConexionBD().create_tables()
+#ConexionBD().drop_tables()
+# Orígenes permitidos
+origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
 
 @app.get("/")
 async def root():

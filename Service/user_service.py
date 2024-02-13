@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from Models.Users import UserSchema
-from Data.data import User
+from Models.Users import UserModel
+from Data.user_data import User
 from passlib.context import CryptContext
 from Utils.Jwt.jwt import JWT
 
@@ -16,7 +16,7 @@ class UserService:
         return db.query(User).filter(User.id == user_id).first()
 
     # Crear un usuario
-    def create_user(self, db: Session, user: UserSchema):
+    def create_user(self, db: Session, user: UserModel):
         # Hashea la contraseña antes de almacenarla
         token = JWT().create_access_token({"sub": user.name}, expires_minutes=60)
         hashed_password = self.pwd_context.hash(user.password)
@@ -39,7 +39,7 @@ class UserService:
         db.commit()
 
     # Actualizar un usuario
-    def update_user(self, db: Session, user_id: int, user: UserSchema):
+    def update_user(self, db: Session, user_id: int, user: UserModel):
         _user = self.get_user_by_id(db=db, user_id=user_id)
         hashed_password = self.pwd_context.hash(_user.password)
         _user.name = user.name

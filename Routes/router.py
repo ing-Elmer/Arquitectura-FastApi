@@ -1,20 +1,12 @@
 from fastapi import APIRouter, Depends
-from Config.config import SessionLocal
+from Config.config import ConexionBD
 from sqlalchemy.orm import Session
 from Models.Users import  RequestUser
 from Controller.user_controller import UserController
 
 
 router = APIRouter()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-        
-        
+    
 @router.post("/user", tags=["User"])
-async def create_user(request: RequestUser, db: Session = Depends(get_db)):
+async def create_user(request: RequestUser, db: Session = Depends(ConexionBD().get_db)):
     return await UserController.create_user(request, db)

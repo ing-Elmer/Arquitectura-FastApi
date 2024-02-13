@@ -19,7 +19,7 @@ async def send_mail(email: EmailSchema) -> JSONResponse:
     # Configurar el mensaje de correo electrónico
     contenido_correo = MessageSchema(
         subject="Activación de cuenta",
-        recipients=[email.email],  # Acceder al atributo email de EmailSchema
+        recipients=[email],
         body=html_content,
         subtype=MessageType.html,
         attachments=[adjunto],

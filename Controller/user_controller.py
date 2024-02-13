@@ -1,13 +1,13 @@
 from Models.Users import RequestUser, ResponseUser
 from Mails.send_email import send_mail
 from fastapi import Depends, HTTPException
-from Config.config import get_db
+from Config.config import ConexionBD
 from sqlalchemy.orm import Session
 from Service.user_service import UserService
 
 class UserController:
     
-    async def create_user(request: RequestUser, db: Session = Depends(get_db)):
+    async def create_user(request: RequestUser, db: Session = Depends(ConexionBD().get_db)):
         try:
             email_address = request.parameter.email
             # Llama al método send_mail con la dirección de correo electrónico

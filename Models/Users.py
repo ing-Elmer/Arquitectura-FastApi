@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 T = TypeVar('T')
 
-class UserSchema(BaseModel):
+class UserModel(BaseModel):
     id: Optional[int] = None
     name: str
     last_name: str
@@ -19,7 +19,7 @@ class UserSchema(BaseModel):
         from_attributes = True
 
 class RequestUser(BaseModel):
-    parameter: UserSchema = Field(...)
+    parameter: UserModel = Field(...)
 
 class ResponseUser(BaseModel, Generic[T]):
     code: int
