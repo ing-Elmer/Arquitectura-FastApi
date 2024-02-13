@@ -2,14 +2,28 @@
 # sistema operativo
 import os
 from email_validator import validate_email, EmailNotValidError
-from fastapi_mail import FastMail, MessageSchema, MessageType
+from fastapi_mail import FastMail, MessageSchema, MessageType, ConnectionConfig
 from Core.Validators.error import CustomError
 from jinja2 import Environment, FileSystemLoader
+# variables de entorno
+from dotenv import load_dotenv
 
-from Config.config import EmailManager
+load_dotenv()
 
+class EmailManager:
+    # Configuración de mail
+    conf = ConnectionConfig(
+        MAIL_USERNAME=os.getenv("MAIL_USERNAME",""),
+        MAIL_PASSWORD=os.getenv("MAIL_PASSWORD",""),
+        MAIL_FROM=os.getenv("MAIL_FROM",""),
+        MAIL_PORT=587,
+        MAIL_SERVER="smtp.gmail.com",
+        MAIL_STARTTLS=True,
+        MAIL_SSL_TLS=False,
+        VALIDATE_CERTS = True
+    )
 
-async def send_email(to: str, subject: str, name: str, link: str = "http://localhost:5173"):
+    async def send_email(self,to: str, subject: str, name: str, link: str = "http://localhost:5173"):
         try:
             # validar el correo
             valid_email = validate_email(to)
@@ -52,7 +66,7 @@ async def send_email(to: str, subject: str, name: str, link: str = "http://local
             )
 
             # Enviar el mensaje
-            fm = FastMail(EmailManager().conf)
+            fm = FastMail(self.conf)
             await fm.send_message(email_content)
 
         except CustomError as e:
