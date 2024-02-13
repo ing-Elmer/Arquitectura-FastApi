@@ -1,12 +1,11 @@
 from sqlalchemy.orm import Session
 from Api.Models.Users import UserModel
 from Api.Data.user_data import User
-from passlib.context import CryptContext
+from Core.Security.security_encryption import SecurityEncryption
 from Core.Security.security_auth import JWT
 
 class UserService:
-    # Configura el contexto de cifrado sin especificar el esquema
-    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
     # Obtener todos los usuarios
     def get_user(db: Session, skipt: int = 0, limit: int = 100):
         return db.query(User).offset(skipt).limit(limit).all()
@@ -19,7 +18,7 @@ class UserService:
     def create_user(self, db: Session, user: UserModel):
         # Hashea la contraseña antes de almacenarla
         token = JWT().create_access_token({"sub": user.name}, expires_minutes=60)
-        hashed_password = self.pwd_context.hash(user.password)
+        hashed_password = SecurityEncryption.hash_password(user.password)
         _user = User(
             name=user.name,
             last_name=user.last_name,
