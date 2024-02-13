@@ -5,12 +5,12 @@ from Config.config import conf, EmailSchema
 
 async def send_mail(email: EmailSchema) -> JSONResponse:
     # Cargar el contenido HTML desde el archivo
-    with open("Utils/Templates/Email.html", "r") as file:
+    with open("Resources/Templates/Email.html", "r") as file:
         html_content = file.read()
 
     # Adjuntar la imagen del logo
     adjunto = {
-        "file": "Utils/Image/logo-2.png",
+        "file": "Resources/Image/logo-2.png",
         "filename": "logo.png",
         "type": "image/png",
         "headers": {"Content-ID": "<logo>"}
