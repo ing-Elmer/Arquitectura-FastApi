@@ -3,7 +3,6 @@ from jose import JWTError, jwt
 import os
 class JWT:
     def __init__(self):
-        
         self.SECRET_KEY = os.getenv("SECRET_KEY")
         self.ALGORITHM = os.getenv("ALGORITHM")
         self.DEFAULT_EXPIRE_MINUTES = os.getenv("DEFAULT_EXPIRE_MINUTES")
