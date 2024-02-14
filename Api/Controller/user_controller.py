@@ -1,10 +1,17 @@
-from Api.Models.Users import RequestUser, ResponseUser, RequestUserLogin
+from Api.Models.Users import RequestUser, ResponseUser, RequestUserLogin, ResponseUsers
 from Core.Emails.email import EmailManager
 from fastapi import Depends, HTTPException
 from Api.Data.connection_data import ConexionBD
 from sqlalchemy.orm import Session
 from Api.Service.user_service import UserService
 from Core.Validators.error import CustomError
+from fastapi import Depends, HTTPException
+from sqlalchemy.orm import Session
+from Api.Data.connection_data import ConexionBD
+from Api.Models.Users import ResponseUsers
+from Api.Service.user_service import UserService
+from Core.Validators.error import CustomError
+
 class UserController:
     
     async def create_user(request: RequestUser, db: Session = Depends(ConexionBD().get_db)):
@@ -60,7 +67,7 @@ class UserController:
     def get_user(db: Session = Depends(ConexionBD().get_db), skipt: int = 0, limit: int = 100):
         try:
             users = UserService().get_user(db, skipt, limit)
-            return ResponseUser(code=200, status="success", message="Usuarios obtenidos correctamente", result=users).model_dump(exclude_none=True)
+            return ResponseUsers(code=200, status="success", message="Usuarios obtenidos correctamente", result=users).model_dump(exclude_none=True)
         except CustomError as e:
             raise e
         except HTTPException as e:

@@ -1,5 +1,6 @@
 from typing import List, Optional, Generic, TypeVar
 from pydantic import BaseModel, Field
+from typing import List, Optional
 
 T = TypeVar('T')
 
@@ -27,11 +28,21 @@ class UserModel(BaseModel):
 class RequestUser(BaseModel):
     parameter: UserModel = Field(...)
     
+
 class ResponseUser(BaseModel, Generic[T]):
     code: int
     status: str
     message: str
     result: Optional[T]
+    
+    
+class ResponseUsers(BaseModel, Generic[T]):
+    code: int
+    status: str
+    message: str
+    result: List[T]
+    class Config:
+        exclude = ["password", "otp", "created_at", "updated_at", "is_active", "term_conditions", "is_verified", "last_login", "role"]
     
 class LoginModel(BaseModel):
     email: str

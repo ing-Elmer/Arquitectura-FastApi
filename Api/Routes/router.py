@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from Api.Data.connection_data import ConexionBD
 from sqlalchemy.orm import Session
-from Api.Models.Users import  RequestUser, RequestUserLogin
+from Api.Models.Users import  RequestUser, RequestUserLogin, ResponseUser, ResponseUsers
 from Api.Controller.user_controller import UserController
 
 
