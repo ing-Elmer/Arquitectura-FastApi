@@ -4,34 +4,43 @@ from Api.Data.user_data import User
 from Core.Security.security_encryption import SecurityEncryption
 from Core.Security.security_auth import JWT
 from Core.Validators.validator_models import ValidatorModels
+from Core.Validators.error import CustomError
+
 class UserService:
 
     # Obtener todos los usuarios
+    @staticmethod
     def get_user(db: Session, skipt: int = 0, limit: int = 100):
         return db.query(User).offset(skipt).limit(limit).all()
 
     # Obtener un usuario por su id
+    @staticmethod
     def get_user_by_id(db: Session, user_id: int):
         return db.query(User).filter(User.id == user_id).first()
 
     # Crear un usuario
-    def create_user(self, db: Session, user: UserModel):
-        # Hashea la contraseña antes de almacenarla
-        token = JWT().create_access_token({"sub": user.name},token_type="activate", expires_minutes=60)
-        hashed_password = SecurityEncryption.hash_password(user.password)
-        _user = User(
-            name=user.name,
-            last_name=user.last_name,
-            email=user.email,
-            password=hashed_password,
-            phone=user.phone,
-            otp=token,
-        )
-        db.add(_user)
-        db.commit()
-        db.refresh(_user)
-        return _user
-
+    @staticmethod
+    def create_user( db: Session, user: UserModel):
+        try:
+            # Hashea la contraseña antes de almacenarla
+            token = JWT().create_access_token({"sub": user.name},token_type="activate", expires_minutes=60)
+            hashed_password = SecurityEncryption.hash_password(user.password)
+            _user = User(
+                name=user.name,
+                last_name=user.last_name,
+                email=user.email,
+                password=hashed_password,
+                phone=user.phone,
+                otp=token,
+            )
+            db.add(_user)
+            db.commit()
+            db.refresh(_user)
+            return _user
+        except CustomError as e:
+            raise e
+        except Exception as e:
+            raise CustomError(500, f"Error al enviar el correo: {str(e)}")
     # Eliminar un usuario
     def remove_User(self,db: Session, user_id: int):
         _user = self.get_user_by_id(db=db, user_id=user_id)
