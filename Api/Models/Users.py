@@ -24,25 +24,40 @@ class UserModel(BaseModel):
 
     class Config:
         from_attributes = True
-
+        
 class RequestUser(BaseModel):
     parameter: UserModel = Field(...)
     
 
-class ResponseUser(BaseModel, Generic[T]):
+class ResponseUser(BaseModel):
     code: int
     status: str
     message: str
-    result: Optional[T]
-    
-    
-class ResponseUsers(BaseModel, Generic[T]):
-    code: int
-    status: str
-    message: str
-    result: List[T]
+    result: Optional[UserModel] = None 
+        
+class UserUpdateModel(BaseModel):
+    name: Optional[str] = None
+    last_name: Optional[str] = None
+    email: Optional[str] = None
+    image: Optional[str] = None
+    birthdate: Optional[str] = None
+    phone: Optional[int] = None
+
     class Config:
-        exclude = ["password", "otp", "created_at", "updated_at", "is_active", "term_conditions", "is_verified", "last_login", "role"]
+        from_attributes = True
+
+class RequestUserUpdate(BaseModel):
+    parameter: UserUpdateModel = Field(...)
+
+class ResponseUserUpdate(BaseModel, Generic[T]):
+    code: int
+    status: str
+    message: str
+    result: Optional[UserUpdateModel] = None 
+    
+
+    
+
     
 class LoginModel(BaseModel):
     email: str

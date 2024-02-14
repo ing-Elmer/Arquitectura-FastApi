@@ -1,16 +1,11 @@
-from Api.Models.Users import RequestUser, ResponseUser, RequestUserLogin, ResponseUsers
+from Api.Models.Users import RequestUser, ResponseUser, RequestUserLogin,RequestUserUpdate, ResponseUserUpdate
 from Core.Emails.email import EmailManager
 from fastapi import Depends, HTTPException
 from Api.Data.connection_data import ConexionBD
 from sqlalchemy.orm import Session
 from Api.Service.user_service import UserService
 from Core.Validators.error import CustomError
-from fastapi import Depends, HTTPException
-from sqlalchemy.orm import Session
-from Api.Data.connection_data import ConexionBD
-from Api.Models.Users import ResponseUsers
-from Api.Service.user_service import UserService
-from Core.Validators.error import CustomError
+
 
 class UserController:
     
@@ -64,10 +59,11 @@ class UserController:
         except Exception as e:
             raise CustomError(500, f"Ocurrio un error inesperado, por favor vuelva a intentar mas tarde: {str(e)}")
 
+    @staticmethod
     def get_user(db: Session = Depends(ConexionBD().get_db), skipt: int = 0, limit: int = 100):
         try:
             users = UserService().get_user(db, skipt, limit)
-            return ResponseUsers(code=200, status="success", message="Usuarios obtenidos correctamente", result=users).model_dump(exclude_none=True)
+            return ResponseUser(code=200, status="success", message="Usuarios obtenidos correctamente", result=users).model_dump(exclude_none=True)
         except CustomError as e:
             raise e
         except HTTPException as e:
@@ -75,5 +71,16 @@ class UserController:
                 raise CustomError(403, f"Error de permisos: {str(e)}")
             elif e.status_code == 401:
                 raise CustomError(401, f"Error al autenticarse: {str(e)}")
+        except Exception as e:
+            raise CustomError(500, f"Error en el servidor, por favor vuelva a intentar mas tarde: {str(e)}")
+        
+    def update_user(user_id: int, request: RequestUserUpdate, db: Session = Depends(ConexionBD().get_db)):
+        try:
+            user = UserService().update_user(db, user_id, request.parameter)
+            return ResponseUserUpdate(code=200, status="success", message="Usuario actualizado correctamente", result=user).model_dump(exclude_none=True)
+        except CustomError as e:
+            raise e
+        except ValueError as e:
+            raise HTTPException(status_code=401, detail=str(e))
         except Exception as e:
             raise CustomError(500, f"Error en el servidor, por favor vuelva a intentar mas tarde: {str(e)}")

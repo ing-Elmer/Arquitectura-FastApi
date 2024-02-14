@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from Api.Models.Users import UserModel
+from Api.Models.Users import UserModel,UserUpdateModel
 from Api.Data.user_data import User
 from Core.Security.security_encryption import SecurityEncryption
 from Core.Security.security_auth import JWT
@@ -46,20 +46,20 @@ class UserService:
 
     # Actualizar un usuario
     @staticmethod
-    def update_user(self, db: Session, user_id: int, user: UserModel):
-        _user = self.get_user_by_id(db=db, user_id=user_id)
+    def update_user(db: Session, user_id: int, user: UserUpdateModel):
+        _user = db.query(User).filter(User.id == user_id).first()
 
         # Verifica si el usuario que realiza la actualización es el dueño de la cuenta
         if _user.id != user_id:
             raise CustomError(403, "No tienes permisos para actualizar este usuario.")
 
         # Resto del código para la actualización del usuario
-        hashed_password = SecurityEncryption.hash_password(user.password)
         _user.name = user.name
         _user.last_name = user.last_name
         _user.email = user.email
-        _user.password = hashed_password
-
+        _user.image = user.image
+        _user.birthdate = user.birthdate
+        _user.phone = user.phone
         db.commit()
         db.refresh(_user)
         return _user
